@@ -20,4 +20,15 @@ public class PlayerScript : MonoBehaviour
         float y = maxSpeed * Input.GetAxis("Vertical");
         rbody.velocity = new Vector2(x, y);
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        //if we hit a badguy, spawn a new version of ourselves from MSM and 
+        if (collision.collider.gameObject.tag.Equals("Enemy"))
+        {
+            MSMScript.Instance.SpawnPlayer();
+            MSMScript.Instance.PlayerDied();
+            Destroy(gameObject);
+        }
+    }
 }
