@@ -16,7 +16,6 @@ public class WayPointScript : MonoBehaviour
         if(Vector2.Distance(waypoints[currentTarget].transform.position, transform.position) < epsilon)
         {
             // ...advance to the next waypoint target
-            print("Length: " + waypoints.Length + " currentTarget: " + currentTarget);
             currentTarget++;
             currentTarget = currentTarget % waypoints.Length;
         }
