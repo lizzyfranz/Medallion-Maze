@@ -30,5 +30,10 @@ public class PlayerScript : MonoBehaviour
             MSMScript.Instance.PlayerDied();
             Destroy(gameObject);
         }
+
+        if (collision.collider.gameObject.tag.Equals("Finish"))
+        {
+            MSMScript.Instance.FinishGame();
+        }
     }
 }

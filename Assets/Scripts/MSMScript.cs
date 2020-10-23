@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MSMScript : MonoBehaviour
@@ -9,7 +10,7 @@ public class MSMScript : MonoBehaviour
     public Text scoreText;
 
     public PlayerScript playerPrototype;
-
+    private const string HIGHSCORE = "highscore";
     private static MSMScript _instance = null;
     public static MSMScript Instance
     {
@@ -38,7 +39,22 @@ public class MSMScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        //see if the user would like to quit
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            int highscore = 0;
+
+            if (PlayerPrefs.HasKey(HIGHSCORE))
+            {
+                highscore = PlayerPrefs.GetInt(HIGHSCORE);
+            }
+
+            if (highscore < score)
+            {
+                PlayerPrefs.SetInt(HIGHSCORE, score);
+            }
+            Application.Quit();
+        }
     }
 
     public void HitCoin()
@@ -59,5 +75,22 @@ public class MSMScript : MonoBehaviour
     public void SpawnPlayer()
     {
         Instantiate(playerPrototype, new Vector2(-7, -4.5f), Quaternion.identity);
+    }
+
+    public void FinishGame()
+    {
+        int highscore = 0;
+
+        if (PlayerPrefs.HasKey(HIGHSCORE))
+        {
+            highscore = PlayerPrefs.GetInt(HIGHSCORE);
+        }
+
+        if (highscore < score)
+        {
+            PlayerPrefs.SetInt(HIGHSCORE, score);
+        }
+
+        SceneManager.LoadScene("OpeningScene");
     }
 }
